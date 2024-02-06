@@ -238,30 +238,8 @@ def inspect_cuda():
     return json.loads(output), nvcc_settings
 
 
-tensorflow_package = 'tensorflow==2.3.0'
-numpy_package = 'numpy==1.18'
-try:
-    # Look for CUDA devices and NVCC/CUDA installation
-    device_info, nvcc_settings = inspect_cuda()
-    cuda_version = device_info['cuda_version']
-    
-    if cuda_version >= 11000:
-        tensorflow_package = 'tensorflow-gpu==2.4.1'
-        numpy_package = 'numpy==1.19.2'
-    else:
-        tensorflow_package = 'tensorflow-gpu==2.3.0'
-        numpy_package = 'numpy==1.18'
-    print("CUDA '{}' found. "
-          "Installing tensorflow GPU".format(cuda_version))
-
-except InspectCudaException as e:
-    # Can't find a reasonable NVCC/CUDA install. Go with the CPU version
-    print("CUDA not found: {}. ".format(str(e)))
-    print("Installing tensorflow CPU")
-
-    device_info, nvcc_settings = {}, {'cuda_available': False}
-    tensorflow_package = 'tensorflow==2.3.0'
-    numpy_package = 'numpy==1.18'
+tensorflow_package = 'tensorflow==2.13.1'
+numpy_package = 'numpy<=1.24.3,>=1.22'
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -284,10 +262,12 @@ setuptools.setup(name='InvoiceNet',
                      "opencv-python==4.5.1.48",
                      "pdf2image==1.14.0",
                      "pdfplumber==0.5.27",
-                     "PyPDF2==1.26.0",
+                     "PyPDF2==1.27.9",
                      "pytesseract==0.3.7",
                      "python-dateutil==2.8.1",
                      "PyYAML==5.4.1",
                      "simplejson==3.17.2",
-                     "tqdm==4.59.0"
+                     "tqdm==4.59.0",
+                     "google-api-python-client",
+                     "google-cloud-vision"
                  ])

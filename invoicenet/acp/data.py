@@ -185,7 +185,7 @@ class InvoiceData(Data):
 
     def encode_image(self, page):
         im = Image.open(page["filename"])
-        im = im.convert('RGB').resize(self.im_size[::-1], Image.ANTIALIAS)
+        im = im.convert('RGB').resize(self.im_size[::-1], Image.Resampling.LANCZOS)
         pixels = (np.asarray(im, np.float32) / 255. - 0.5) * 2.
         return pixels
 
@@ -259,7 +259,7 @@ class InvoiceData(Data):
             "filename": path
         }
 
-        pixels = pixels.convert('RGB').resize(self.im_size[::-1], Image.ANTIALIAS)
+        pixels = pixels.convert('RGB').resize(self.im_size[::-1], Image.Resampling.LANCZOS)
         pixels = (np.asarray(pixels, np.float32) / 255. - 0.5) * 2.
 
         n_grams = page['nGrams']
